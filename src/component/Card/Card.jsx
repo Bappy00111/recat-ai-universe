@@ -2,16 +2,27 @@
 import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
 import SingelCard from '../SingelCard/SingelCard';
+import Modal from '../Modal/Modal';
 
 const Card = () => {
 
     // console.log(props);
     const [cards, setCards] = useState([]);
-    const [showAll, setShowAll] = useState(false);
+    const [showAll, setShowAll] = useState(true);
+    const [unickId,setUnickId] = useState(null)
+    const [singelData,setSingelData] = useState({})
+    
+   
 
-    const handelShowAll = () =>{
-        setShowAll(true)
+    const handelShowAll = () => {
+        setShowAll(false)
     }
+
+    useEffect(()=>{
+        fetch(`https://openapi.programming-hero.com/api/ai/tool/${unickId}`)
+        .then(res => res.json())
+        .then(data => setSingelData(data))
+    },[unickId])
 
 
     useEffect(() => {
@@ -24,8 +35,9 @@ const Card = () => {
         }
         loadedData()
     }, [])
+    // console.log(singelData);
 
-    
+
 
 
     return (
@@ -33,15 +45,18 @@ const Card = () => {
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-[1240px] mx-auto mb-5'>
                 {
 
-                    cards.slice(0,showAll ? 12 : 6).map(card => <SingelCard
+                    cards.slice(0, showAll ? 6 : 12).map(card => <SingelCard
                         {...card}
+                        unickId = {setUnickId}
                     ></SingelCard>)
                 }
             </div>
-            <p onClick={handelShowAll}>
-                <Button>See More</Button>
-            </p>
-
+            <div className='text-center'>
+                <span className='inline-block' onClick={handelShowAll}>
+                   {showAll && <Button>See More</Button>}
+                </span>
+            </div>
+            <Modal singelData={singelData}></Modal>
         </>
     );
 };

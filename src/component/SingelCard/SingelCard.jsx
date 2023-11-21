@@ -1,8 +1,10 @@
 import React from 'react';
 
 const SingelCard = (props) => {
-    console.log(props);
-    const { image, features, name, published_in } = props;
+    // console.log(props.unickId);
+    const { image, features, name, published_in,id,unickId } = props;
+
+  
     return (
         <div className="card w-full bg-base-100 shadow-xl">
             <figure><img src={image} alt="Shoes" /></figure>
@@ -24,12 +26,16 @@ const SingelCard = (props) => {
                             <p >{published_in}</p>
                         </div>
                     </div>
-                    <span className='cursor-pointer'>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <button
+                    
+                    onClick={()=>document.getElementById('my_modal_4').showModal()}
+                     className='cursor-pointer'>
+                        <svg
+                        onClick={()=>unickId(id)}
+                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                         </svg>
-
-                    </span>
+                    </button>
                 </div>
             </div>
         </div>
